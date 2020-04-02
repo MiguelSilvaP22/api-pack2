@@ -13,7 +13,9 @@ function getCursos(req, res) {
         }, {
             model: evaluacion,
             as: 'evaluaciones',
-            where: {activo: true}
+            where: {
+                activo: true
+            }
         }]
     }).then(
         resultado => {
@@ -21,7 +23,11 @@ function getCursos(req, res) {
                 result: resultado
             });
         }
-    )
+    ).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
+    })
 }
 
 function crearCurso(req, res) {
@@ -35,6 +41,10 @@ function crearCurso(req, res) {
         res.status(200).send({
             result: resultado
         });
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 
 }
@@ -64,6 +74,10 @@ function editarCurso(req, res) {
             });
         }
 
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 }
 
@@ -87,6 +101,10 @@ function eliminarCurso(req, res) {
             });
         }
 
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 }
 

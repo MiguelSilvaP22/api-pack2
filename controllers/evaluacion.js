@@ -2,8 +2,7 @@ const curso = require('../models/curso');
 const persona = require('../models/persona');
 const evaluacion = require('../models/evaluacion');
 
-function getCursos(req, res) {
-}
+function getCursos(req, res) {}
 
 function crearEvaluacion(req, res) {
     evaluacion.create({
@@ -15,6 +14,10 @@ function crearEvaluacion(req, res) {
         res.status(200).send({
             result: resultado
         });
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 
 }
@@ -43,6 +46,10 @@ function editarEvaluacion(req, res) {
             });
         }
 
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 }
 
@@ -66,6 +73,10 @@ function eliminarEvaluacion(req, res) {
             });
         }
 
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 }
 

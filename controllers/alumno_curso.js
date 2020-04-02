@@ -4,7 +4,7 @@ const db = require('../config/connection');
 
 
 function getAlumnos_de_curso(req, res) {
-    const query =        
+    const query =
         " SELECT " +
         "     curso.*, " +
         "     COALESCE (( " +
@@ -26,8 +26,7 @@ function getAlumnos_de_curso(req, res) {
         "     id_curso = :id_curso ";
 
     db.query(
-        query,
-        {
+        query, {
             replacements: {
                 id_curso: req.params.id_curso
             },
@@ -37,36 +36,39 @@ function getAlumnos_de_curso(req, res) {
         res.status(200).send({
             result: resultado
         });
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 }
 
 
 function getCursos_de_alumno(req, res) {
-    const query =       
-    " SELECT     " +
-	"     persona.*,     " +
-    "     COALESCE ((    " +
-    "         SELECT     " +
-    "             json_agg ( curso.* )   " +
-    "         FROM   " +
-    "             alumno_curso   " +
-    "             INNER JOIN curso ON ( curso.id_curso = alumno_curso.id_curso )     " +
-    "         WHERE  " +
-    "             alumno_curso.id_curso = curso.id_curso     " +
-    "             AND curso.activo IS TRUE   " +
-    "             AND alumno_curso.activo IS TRUE    " +
-    "                 ),     " +
-    "             '[]'   " +
-    "         ) AS cursos    " +
-    " FROM   " +
-    "     persona    " +
-    " WHERE  " +
-    "     persona.id_persona = :id_persona    " +
-    "     AND persona.activo IS TRUE     ";
+    const query =
+        " SELECT     " +
+        "     persona.*,     " +
+        "     COALESCE ((    " +
+        "         SELECT     " +
+        "             json_agg ( curso.* )   " +
+        "         FROM   " +
+        "             alumno_curso   " +
+        "             INNER JOIN curso ON ( curso.id_curso = alumno_curso.id_curso )     " +
+        "         WHERE  " +
+        "             alumno_curso.id_curso = curso.id_curso     " +
+        "             AND curso.activo IS TRUE   " +
+        "             AND alumno_curso.activo IS TRUE    " +
+        "                 ),     " +
+        "             '[]'   " +
+        "         ) AS cursos    " +
+        " FROM   " +
+        "     persona    " +
+        " WHERE  " +
+        "     persona.id_persona = :id_persona    " +
+        "     AND persona.activo IS TRUE     ";
 
     db.query(
-        query,
-        {
+        query, {
             replacements: {
                 id_persona: req.params.id_persona
             },
@@ -76,6 +78,10 @@ function getCursos_de_alumno(req, res) {
         res.status(200).send({
             result: resultado
         });
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 }
 
@@ -89,6 +95,10 @@ function crearAlumno_curso(req, res) {
         res.status(200).send({
             result: resultado
         });
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 
 }
@@ -118,6 +128,10 @@ function eliminarAlumno_curso(req, res) {
             });
         }
 
+    }).catch(exception => {
+        res.status(500).send({
+            error: exception
+        })
     })
 }
 

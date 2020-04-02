@@ -48,6 +48,7 @@ app.use('', require('./routes/persona'));
 app.use('', require('./routes/curso'));
 app.use('', require('./routes/alumno_curso'));
 app.use('', require('./routes/evaluacion'));
+app.use('', require('./routes/nota'));
 
 
 // app.use(utilidades.reemplazaComilla)
