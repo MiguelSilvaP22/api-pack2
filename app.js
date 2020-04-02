@@ -4,6 +4,8 @@ const app = express();
 const db = require('./config/connection');
 const Persona = require('./models/persona');
 const Rol = require('./models/rol');
+const Curso = require('./models/curso');
+const alumno_curso = require('./models/alumno_curso');
 
 
 // let api = require('./routes/routes_leq');
@@ -27,16 +29,21 @@ app.use((req, res, next) => {
 
 db.authenticate()
     .then(() => {
-    Rol.sync();
-    Persona.sync()
+        // Rol.sync();
+        // Persona.sync()
+        // Curso.sync()
+        alumno_curso.sync()
+        console.log('CONECTADO')
     })
     .catch(err => console.log('Error: ' + err));
-    
+
 
 
 //Define routes
 app.use('', require('./routes/index'));
 app.use('', require('./routes/persona'));
+app.use('', require('./routes/curso'));
+app.use('', require('./routes/alumno_curso'));
 
 
 // app.use(utilidades.reemplazaComilla)
