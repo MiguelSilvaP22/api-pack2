@@ -6,6 +6,8 @@ const Persona = require('./models/persona');
 const Rol = require('./models/rol');
 const Curso = require('./models/curso');
 const alumno_curso = require('./models/alumno_curso');
+const evaluacion = require('./models/evaluacion');
+const nota = require('./models/nota');
 
 
 // let api = require('./routes/routes_leq');
@@ -32,7 +34,8 @@ db.authenticate()
         // Rol.sync();
         // Persona.sync()
         // Curso.sync()
-        alumno_curso.sync()
+        // alumno_curso.sync()
+        // nota.sync()
         console.log('CONECTADO')
     })
     .catch(err => console.log('Error: ' + err));
@@ -44,6 +47,7 @@ app.use('', require('./routes/index'));
 app.use('', require('./routes/persona'));
 app.use('', require('./routes/curso'));
 app.use('', require('./routes/alumno_curso'));
+app.use('', require('./routes/evaluacion'));
 
 
 // app.use(utilidades.reemplazaComilla)

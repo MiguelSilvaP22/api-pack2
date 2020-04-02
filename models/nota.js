@@ -1,18 +1,30 @@
 const Sequelize = require('sequelize');
 const db = require('../config/connection');
-const persona = require('./persona');
 const evaluacion = require('./evaluacion');
+const persona = require('./persona');
 
-const curso = db.define('curso', {
-    id_curso: {
+const nota = db.define('nota', {
+    id_nota: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    nombre_curso: Sequelize.STRING,
-    fecha_inicio: Sequelize.DATE,
-    fecha_fin: Sequelize.DATE,
+    puntaje: Sequelize.INTEGER,
     activo: Sequelize.BOOLEAN,
+    id_evaluacion: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: evaluacion,
+            key: 'id_evaluacion'
+        }
+    },
+    id_alumno: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: persona,
+            key: 'id_persona'
+        }
+    }
 }, {
     schema: 'public',
     createdAt: 'fecha_hora_registro',
@@ -26,15 +38,7 @@ const curso = db.define('curso', {
 
 
 
-curso.belongsTo(persona, {as: 'profesor', foreignKey: {
-    name: 'id_profesor',
-    allowNull: false
-  }})
-
-  curso.hasMany(evaluacion, {as: 'evaluaciones', foreignKey: {
-    name: 'id_curso',
-    allowNull: false
-  }})
 
 
-module.exports = curso;
+
+module.exports = nota;

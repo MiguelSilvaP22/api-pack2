@@ -1,27 +1,21 @@
 const Sequelize = require('sequelize');
 const db = require('../config/connection');
-const persona = require('./persona');
 const curso = require('./curso');
 
-const alumno_curso = db.define('alumno_curso', {
-    id_alumno_curso: {
+const evaluacion = db.define('evaluacion', {
+    id_evaluacion: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
+    descripcion: Sequelize.STRING,
+    fecha_evaluacion: Sequelize.DATE,
     activo: Sequelize.BOOLEAN,
     id_curso: {
         type: Sequelize.INTEGER,
         references: {
             model: curso,
             key: 'id_curso'
-        }
-    },
-    id_alumno: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: persona,
-            key: 'id_persona'
         }
     }
 }, {
@@ -38,4 +32,6 @@ const alumno_curso = db.define('alumno_curso', {
 
 
 
-module.exports = alumno_curso;
+
+
+module.exports = evaluacion;

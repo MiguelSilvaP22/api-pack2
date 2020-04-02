@@ -1,7 +1,13 @@
 const Sequelize = require('sequelize');
 const db = require('../config/connection');
-const rol = require('./rol');
 
+
+/*
+  -- DETALLE --
+  perfil 1 --> PROFESOR
+  perfil 2 --> ALUMNO
+
+*/
 
 const persona = db.define('persona', {
     id_persona: {
@@ -13,7 +19,8 @@ const persona = db.define('persona', {
     nombres: Sequelize.STRING,
     apellido_mat: Sequelize.STRING,
     apellido_pat: Sequelize.STRING,
-    activo: Sequelize.BOOLEAN
+    activo: Sequelize.BOOLEAN,
+
 }, {
     schema: 'public',
     createdAt: 'fecha_hora_registro',
@@ -27,9 +34,7 @@ const persona = db.define('persona', {
 
 
 
-persona.belongsTo(rol, {foreignKey: {
-    name: 'id_rol',
-    allowNull: false
-  }})
+
+
 
 module.exports = persona;

@@ -3,34 +3,14 @@ const persona = require('../models/persona');
 const evaluacion = require('../models/evaluacion');
 
 function getCursos(req, res) {
-    curso.findAll({
-        where: {
-            activo: 'true'
-        },
-        include: [{
-            model: persona,
-            as: 'profesor'
-        }, {
-            model: evaluacion,
-            as: 'evaluaciones',
-            where: {activo: true}
-        }]
-    }).then(
-        resultado => {
-            res.status(200).send({
-                result: resultado
-            });
-        }
-    )
 }
 
-function crearCurso(req, res) {
-    curso.create({
-        nombre_curso: req.body.nombre_curso,
-        fecha_inicio: req.body.fecha_inicio,
-        fecha_fin: req.body.fecha_fin,
+function crearEvaluacion(req, res) {
+    evaluacion.create({
+        descripcion: req.body.descripcion,
+        fecha_evaluacion: req.body.fecha_evaluacion,
         activo: true,
-        id_profesor: req.body.id_profesor
+        id_curso: req.body.id_curso
     }).then(resultado => {
         res.status(200).send({
             result: resultado
@@ -39,20 +19,19 @@ function crearCurso(req, res) {
 
 }
 
-function editarCurso(req, res) {
-    curso.findOne({
+function editarEvaluacion(req, res) {
+    evaluacion.findOne({
         where: {
-            id_curso: req.body.id_curso
+            id_evaluacion: req.body.id_evaluacion
         }
     }).then(resultado => {
 
         if (resultado != null) {
             resultado.update({
-                nombre_curso: req.body.nombre_curso,
-                fecha_inicio: req.body.fecha_inicio,
-                fecha_fin: req.body.fecha_fin,
+                descripcion: req.body.descripcion,
+                fecha_evaluacion: req.body.fecha_evaluacion,
                 activo: true,
-                id_profesor: req.body.id_profesor
+                id_curso: req.body.id_curso
             }).then(resultUpdate => {
                 res.status(200).send({
                     result: resultUpdate
@@ -67,10 +46,10 @@ function editarCurso(req, res) {
     })
 }
 
-function eliminarCurso(req, res) {
-    curso.findOne({
+function eliminarEvaluacion(req, res) {
+    evaluacion.findOne({
         where: {
-            id_curso: req.body.id_curso
+            id_evaluacion: req.body.id_evaluacion
         }
     }).then(resultado => {
         if (resultado != null) {
@@ -92,7 +71,7 @@ function eliminarCurso(req, res) {
 
 module.exports = {
     getCursos,
-    crearCurso,
-    editarCurso,
-    eliminarCurso
+    crearEvaluacion,
+    editarEvaluacion,
+    eliminarEvaluacion
 }
