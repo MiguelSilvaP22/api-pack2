@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/connection');
+const rol = require('./rol');
 
 
 /*
@@ -20,6 +21,13 @@ const persona = db.define('persona', {
     apellido_mat: Sequelize.STRING,
     apellido_pat: Sequelize.STRING,
     activo: Sequelize.BOOLEAN,
+    id_rol: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: rol,
+            key: 'id_rol'
+        }
+    }
 
 }, {
     schema: 'public',

@@ -46,18 +46,21 @@ function getDetalleAlumno(req, res) {
         "     ) AS cursos_aux ) as cursos  " +
         " FROM  " +
         "     persona  " +
-        " WHERE persona.activo is true  ";
+        " WHERE persona.activo is true  "+
+        " AND persona.id_persona = :id_persona "+
+        " limit 1";
 
     db.query(
         query, {
-            // replacements: {
-            //     id_persona: req.params.id_persona
-            // },
-            type: db.QueryTypes.SELECT
+            replacements: {
+                id_persona: req.params.id_persona
+            },
+            type: db.QueryTypes.SELECT,
+            raw: true
         }
     ).then(resultado => {
         res.status(200).send({
-            result: resultado
+            result: resultado[0]
         });
     }).catch(exception => {
         res.status(500).send({
@@ -67,6 +70,7 @@ function getDetalleAlumno(req, res) {
 }
 
 function crearPersona(req, res) {
+    console.log(req.body)
     persona.create({
         rut: req.body.rut,
         nombres: req.body.nombres,
