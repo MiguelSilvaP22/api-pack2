@@ -1,10 +1,33 @@
 const curso = require('../models/curso');
-const persona = require('../models/persona');
 const evaluacion = require('../models/evaluacion');
 
-function getCursos(req, res) {}
+function getEvaluaciones(req, res) {
+    evaluacion.findAll({
+        where: {
+            activo: 'true'
+        },
+        include: [{
+            model: curso
+        }
+        ]
+    }).then(
+        resultado => {
+            res.status(200).send({
+                result: resultado
+            });
+        }
+    ).catch(exception => {
+        console.log(exception);
+
+        res.status(500).send({
+            error: exception
+        })
+    })
+}
 
 function crearEvaluacion(req, res) {
+    
+    console.log(req.body)
     evaluacion.create({
         descripcion: req.body.descripcion,
         fecha_evaluacion: req.body.fecha_evaluacion,
@@ -15,6 +38,7 @@ function crearEvaluacion(req, res) {
             result: resultado
         });
     }).catch(exception => {
+        console.log(exception);
         res.status(500).send({
             error: exception
         })
@@ -81,7 +105,7 @@ function eliminarEvaluacion(req, res) {
 }
 
 module.exports = {
-    getCursos,
+    getEvaluaciones,
     crearEvaluacion,
     editarEvaluacion,
     eliminarEvaluacion

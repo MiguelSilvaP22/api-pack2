@@ -5,25 +5,28 @@ const db = require('../config/connection');
 
 function getAlumnos_de_curso(req, res) {
     const query =
-        " SELECT " +
-        "     curso.*, " +
-        "     COALESCE (( " +
-        "         SELECT " +
-        "             json_agg ( persona.* )  " +
-        "         FROM " +
-        "             alumno_curso " +
-        "             INNER JOIN persona ON ( persona.id_persona = alumno_curso.id_alumno )  " +
-        "         WHERE " +
-        "             alumno_curso.id_curso = curso.id_curso  " +
-        "             AND persona.activo IS TRUE  " +
-        "             AND alumno_curso.activo IS TRUE  " +
-        "             ), " +
-        "         '[]'  " +
-        "     ) AS alumnos  " +
-        " FROM " +
-        "     curso  " +
-        " WHERE " +
-        "     id_curso = :id_curso ";
+    "SELECT   " +
+    "curso.*, " + 
+    "       (select json_agg(aux.*) from( " + 
+    "           select persona.*, " + 
+" " + 
+    "               (select  " + 
+    "                   (CASE WHEN count(alumno_curso.*) > 0 THEN true  " + 
+    "                           ELSE false END )as pertenese_curso " + 
+    "               from alumno_curso  " + 
+    "               where alumno_curso.id_alumno = persona.id_persona  " + 
+    "               and alumno_curso.activo is true " + 
+    "							and alumno_curso.id_curso = curso.id_curso    " + 
+    "               ) " + 
+" " + 
+    "           from persona " + 
+    "               where persona.activo is true " + 
+    "        ) as aux)	as alumnos	 " + 
+    "FROM   " + 
+    "    curso    " +
+    " WHERE curso.id_curso = :id_curso"
+
+        console.log(query);
 
     db.query(
         query, {
@@ -34,7 +37,7 @@ function getAlumnos_de_curso(req, res) {
         }
     ).then(resultado => {
         res.status(200).send({
-            result: resultado
+            result: resultado[0]
         });
     }).catch(exception => {
         res.status(500).send({
@@ -108,6 +111,7 @@ function editarAlumno_curso(req, res) {
 }
 
 function eliminarAlumno_curso(req, res) {
+    console.log(req.body)
     alumno_curso.findOne({
         where: {
             id_curso: req.body.id_curso,

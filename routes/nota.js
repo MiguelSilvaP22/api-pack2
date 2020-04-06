@@ -5,7 +5,7 @@ const notaController = require ('../controllers/nota');
 router.post('/nota', notaController.crearNota);
 router.put('/nota', notaController.editarNota);
 router.delete('/nota', notaController.eliminarNota);
-// router.get('/evaluacion', cursoController.getCursos);
+router.get('/nota/:id_curso/:id_evaluacion', notaController.getNotasEvaluacion);
 
 
 module.exports = router;

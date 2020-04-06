@@ -10,13 +10,8 @@ function getCursos(req, res) {
         include: [{
             model: persona,
             as: 'profesor'
-        }, {
-            model: evaluacion,
-            as: 'evaluaciones',
-            where: {
-                activo: true
-            }
-        }]
+        }
+        ]
     }).then(
         resultado => {
             res.status(200).send({

@@ -2,6 +2,7 @@
 const Sequelize = require('sequelize');
 const config = require('./database');
 
+// Configuracion inicial de la base de datos (los parametros se encuentran en el archivo database)
 module.exports = new Sequelize(config.data_base, config.user, config.pass, {
     host: config.host,
     port: config.port,
@@ -10,7 +11,7 @@ module.exports = new Sequelize(config.data_base, config.user, config.pass, {
     dialectOptions: { 
       useUTC: true,
     },
-    timezone: "America/Santiago",// '-03:10',
+    timezone: "America/Santiago",
     pool: {
       max: 5,
       min: 0,

@@ -13,6 +13,7 @@ const curso = db.define('curso', {
     fecha_inicio: Sequelize.DATE,
     fecha_fin: Sequelize.DATE,
     activo: Sequelize.BOOLEAN,
+    
 }, {
     schema: 'public',
     createdAt: 'fecha_hora_registro',
@@ -36,5 +37,9 @@ curso.belongsTo(persona, {as: 'profesor', foreignKey: {
     allowNull: false
   }})
 
+  evaluacion.belongsTo(curso, { foreignKey: {
+    name: 'id_curso',
+    allowNull: false
+  }})
 
 module.exports = curso;
