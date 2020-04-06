@@ -13,5 +13,4 @@ los parametros basicos para entrar a la base de datos esta en archivo  `/config/
 
 ## Requisitos
 
-contar con base de datos postgresql (versión 9.6 ), para correr la base de datos de forma local,
-en caso contrario ocupar base de datos por defecto, la cual se encuentra arriba en un docker.
+contar con base de datos postgresql (versión 9.6 ), para correr la base de datos de forma local.
